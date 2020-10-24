@@ -89,16 +89,6 @@ function App() {
 
     fetchPokemons();
   }, [state.typesValue, state.subtypesValue]);
-  
-  async function fetchTypes() {
-    const typesResponse = await fetch(`${pokemonApiUrl}types`)
-    const { types } = await typesResponse.json();  
-    dispatch({ type: SET_POKEMONS_TYPES, payload: types });
-  
-    const subtypesResponse = await fetch(`${pokemonApiUrl}subtypes`)
-    const { subtypes } = await subtypesResponse.json();
-    dispatch({ type: SET_POKEMONS_SUBTYPES, payload: subtypes });
-  }
    
   function setTypesValue({ filter, value}) {
     if (filter === 'Type') {
@@ -114,9 +104,10 @@ function App() {
         <Switch>
           <Route path="/login" component={Login} />
           <Route path="/password-confirmation" component={PasswordConfirmation} />
-          <Route path="/">
+          <Route path="/" exact>
             <PokemonsPage 
-              fetchTypes={fetchTypes} 
+              pokemonApiUrl={pokemonApiUrl}
+              dispatch={dispatch}
               setTypesValue={setTypesValue}
             />
           </Route>

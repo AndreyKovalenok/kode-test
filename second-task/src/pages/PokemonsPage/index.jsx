@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useCallback } from 'react';
+import React, { useContext, useEffect } from 'react';
 import { StateContext } from '../../App';
 
 import style from './style.module.scss';
@@ -10,17 +10,24 @@ import Loader from '../../components/UI/Loader';
 import Pokemon from './Pokemon';
 import HelpMessage from './HelpMessage';
 
-function CategoriesPage({ fetchTypes, setTypesValue }) {
+import { SET_POKEMONS_TYPES, SET_POKEMONS_SUBTYPES } from '../../store/ACTION_TYPES';
+
+function CategoriesPage({ dispatch, pokemonApiUrl, setTypesValue }) {
 
   const { pokemons, types, subtypes, isLoading, typesValue, subtypesValue } = (useContext(StateContext));
 
-  const memoFetchTypes = useCallback(() => {
-    fetchTypes();  
-  }, [fetchTypes]);
-
   useEffect(() => {
-    memoFetchTypes();
-  }, []);
+    async function fetchTypes() {
+      const typesResponse = await fetch(`${pokemonApiUrl}types`)
+      const { types } = await typesResponse.json();  
+      dispatch({ type: SET_POKEMONS_TYPES, payload: types });
+    
+      const subtypesResponse = await fetch(`${pokemonApiUrl}subtypes`)
+      const { subtypes } = await subtypesResponse.json();
+      dispatch({ type: SET_POKEMONS_SUBTYPES, payload: subtypes });
+    }
+    fetchTypes();
+  }, [dispatch, pokemonApiUrl]);
   
   return (
     <ContentLayout>
