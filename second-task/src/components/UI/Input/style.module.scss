@@ -1,0 +1,22 @@
+.label {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  width: 100%;
+  padding: 1.5rem 2rem 1.1rem;
+  background-color: var(--clGray-2);
+  font-size: var(--fontSize-1);
+}
+
+.title {
+  margin-bottom: 0.3rem;
+  color: var(--clGray-3);
+}
+
+.input {
+  width: 100%;
+  padding: 0.4rem 0;
+  background-color: transparent;
+  border: none;
+  color: var(--clBlack);
+}

@@ -1,0 +1,25 @@
+.button {
+  position: relative;
+  width: 9.6rem;
+  height: 9.6rem;
+  background-color: var(--clGray-4);
+  border-radius: 50%;
+  border: none;
+  transition: 0.2s background-color;
+  cursor: pointer;
+
+  &:hover {
+    background-color: var(--clGray-3);
+  }
+
+  &::after {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 5rem;
+    height: 6rem;
+    background: center / contain url("./arrow.svg") no-repeat;
+  }
+}
