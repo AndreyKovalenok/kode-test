@@ -12,7 +12,7 @@ import HelpMessage from './HelpMessage';
 
 function CategoriesPage({ fetchTypes, setTypesValue }) {
 
-  const { pokemons, types, subtypes, isLoading } = (useContext(StateContext));
+  const { pokemons, types, subtypes, isLoading, typesValue, subtypesValue } = (useContext(StateContext));
 
   const memoFetchTypes = useCallback(() => {
     fetchTypes();  
@@ -30,10 +30,10 @@ function CategoriesPage({ fetchTypes, setTypesValue }) {
         </div>
         <aside className={style.aside}>
           <div className={style.asideRow}>
-            <Select name="Type" list={types} setTypesValue={setTypesValue} />
+            <Select name="Type" list={types} setTypesValue={setTypesValue} value={typesValue} />
           </div>
           <div className={style.asideRow}>
-            <Select name="Subtype" list={subtypes} setTypesValue={setTypesValue} />
+            <Select name="Subtype" list={subtypes} setTypesValue={setTypesValue} value={subtypesValue} />
           </div>
         </aside>
         <div className={style.contentWrapper}>

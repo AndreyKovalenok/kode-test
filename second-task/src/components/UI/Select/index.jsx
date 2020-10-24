@@ -1,12 +1,20 @@
-import React, { useState, useEffect, useContext } from 'react';
+import React, { useState, useEffect } from 'react';
 // import useOnClickOutside from '../../../customHooks/useOnClickOutside';
 
 import style from './style.module.scss';
 
-function Select({ name, list, setTypesValue }) {
+function Select({ name, list, setTypesValue, value = '' }) {
   const [isOpen, setSelectState] = useState(false);
   const [selectClasses, setSelectClasses] = useState([style.select])
   const [dropdownList, setDropdownList] = useState(list);
+
+  const setButtonClassName = (el) => {
+    const className = [style.button];
+    if (value === el) {
+      className.push(style.activeButton);
+    }
+    return className.join(' ');
+  }
 
   const selectClickHandler = () => {
     setSelectState(!isOpen);
@@ -35,7 +43,7 @@ function Select({ name, list, setTypesValue }) {
       <div 
         className={style.selectInput}
         onClick={selectClickHandler}
-      >{name}</div>
+      >{value || name}</div>
       {isOpen && <div className={style.selectDropdown}>
         <input 
           type="text" 
@@ -47,7 +55,7 @@ function Select({ name, list, setTypesValue }) {
           {
             dropdownList.map((el) => (
               <li key={el} className={style.selectItem}>
-                <button className={style.button} onClick={() => {
+                <button className={setButtonClassName(el)} onClick={() => {
                   setTypesValue({ filter: name, value: el });
                 }} type="button">{el}</button>
               </li>

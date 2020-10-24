@@ -73,3 +73,11 @@
   }
   border: none;
 }
+
+.activeButton {
+  background-color: var(--clGray-8);
+
+  &:hover {
+    background-color: var(--clGray-8);
+  }
+}
