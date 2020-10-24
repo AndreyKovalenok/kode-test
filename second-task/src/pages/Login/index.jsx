@@ -1,11 +1,9 @@
 import React from 'react';
 
-import style from './style.module.scss';
+// import style from './style.module.scss';
 
-import MainLayout from '../../Layouts/MainLayout';
+import MainLayout from '../../Layouts/FormLayout';
 import Form from '../../components/Form';
-import Input from '../../components/UI/Input';
-import NextButton from '../../components/UI/NextButton';
 
 function Login() {
   const inputs = [
