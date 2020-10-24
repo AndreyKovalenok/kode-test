@@ -44,18 +44,21 @@
   }
 }
 
-.content {
-  grid-area: content;
-  display: grid;
+.contentWrapper {
   background-color: var(--clGray-1);
-
-  @media (min-width: 1199px) {
-    padding: 6rem 8rem;
-  }
 
   @media (min-width: 880px) { 
     overflow: auto;
   } 
+}
+
+.content {
+  grid-area: content;
+  display: grid;
+
+  @media (min-width: 1199px) {
+    padding: 6rem 8rem;
+  }
 
   @media (min-width: 599px) {
     grid-column-gap: 7.7rem;

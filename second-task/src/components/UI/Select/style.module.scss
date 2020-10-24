@@ -57,6 +57,11 @@
 }
 
 .selectItem {
+  width: 100%;
+}
+
+.button {
+  width: 100%;
   padding: 1.1rem 1.4rem;
   margin-bottom: 0.1rem;
   background-color: var(--clGray-9);
@@ -66,4 +71,5 @@
   &:hover {
     background-color: var(--clGray-7);
   }
+  border: none;
 }

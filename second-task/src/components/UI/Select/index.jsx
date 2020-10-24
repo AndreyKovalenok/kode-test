@@ -1,9 +1,9 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 // import useOnClickOutside from '../../../customHooks/useOnClickOutside';
 
 import style from './style.module.scss';
 
-function Select({ list: { title, list } }) {
+function Select({ name, list, setTypesValue }) {
   const [isOpen, setSelectState] = useState(false);
   const [selectClasses, setSelectClasses] = useState([style.select])
   const [dropdownList, setDropdownList] = useState(list);
@@ -18,9 +18,13 @@ function Select({ list: { title, list } }) {
   };
 
   const filterInputChangeHandler = (evt) => {
-    const filteredList = list.filter((el) => el.text.toLowerCase().includes(evt.target.value.trim().toLowerCase()));
+    const filteredList = list.filter((el) => el.toLowerCase().includes(evt.target.value.trim().toLowerCase()));
     setDropdownList(filteredList);
   };
+
+  useEffect(() => {
+    setDropdownList(list);
+  }, [list]);
 
   // TODO клик вне элемента
   // const ref = useRef();
@@ -31,7 +35,7 @@ function Select({ list: { title, list } }) {
       <div 
         className={style.selectInput}
         onClick={selectClickHandler}
-      >{title}</div>
+      >{name}</div>
       {isOpen && <div className={style.selectDropdown}>
         <input 
           type="text" 
@@ -41,8 +45,12 @@ function Select({ list: { title, list } }) {
         />
         <ul className={style.selectList}>
           {
-            dropdownList.map(({ id, text }) => (
-              <li key={id} className={style.selectItem}>{text}</li>
+            dropdownList.map((el) => (
+              <li key={el} className={style.selectItem}>
+                <button className={style.button} onClick={() => {
+                  setTypesValue({ filter: name, value: el });
+                }} type="button">{el}</button>
+              </li>
             ))
           }
         </ul> 
