@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from 'react';
-// import useOnClickOutside from '../../../customHooks/useOnClickOutside';
+import React, { useState, useEffect, useRef } from 'react';
+import useOnClickOutside from '../../../customHooks/useOnClickOutside';
 
 import style from './style.module.scss';
 
@@ -16,12 +16,17 @@ function Select({ name, list, setTypesValue, value = '' }) {
     return className.join(' ');
   }
 
-  const selectClickHandler = () => {
-    setSelectState(!isOpen);
-    if (selectClasses.indexOf(style.active) !== -1) {
-      setSelectClasses(selectClasses.filter((el) => el !== style.active));
+  const selectClickHandler = (payload) => {
+    if (payload) {
+      setSelectState(false);
+      setSelectClasses([style.select]);
     } else {
-      setSelectClasses([...selectClasses, style.active]);
+      setSelectState(!isOpen);
+      if (selectClasses.indexOf(style.active) !== -1) {
+        setSelectClasses(selectClasses.filter((el) => el !== style.active));
+      } else {
+        setSelectClasses([...selectClasses, style.active]);
+      }
     }
   };
 
@@ -34,15 +39,14 @@ function Select({ name, list, setTypesValue, value = '' }) {
     setDropdownList(list);
   }, [list]);
 
-  // TODO клик вне элемента
-  // const ref = useRef();
-  // useOnClickOutside(ref, () => selectClickHandler(false))
+  const ref = useRef();
+  useOnClickOutside(ref, () => selectClickHandler(true))
 
   return (
-    <div className={selectClasses.join(' ')}>
+    <div ref={ref} className={selectClasses.join(' ')}>
       <div 
         className={style.selectInput}
-        onClick={selectClickHandler}
+        onClick={() => selectClickHandler()}
       >{value || name}</div>
       {isOpen && <div className={style.selectDropdown}>
         <input 

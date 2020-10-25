@@ -19,7 +19,6 @@ function Pagination() {
   }, [page, pageToNumber]);
 
   const buttonClickHandler = (el) => {
-    console.log(el);
     dispatch({ type: SET_PAGE, payload: el });
   };
 
