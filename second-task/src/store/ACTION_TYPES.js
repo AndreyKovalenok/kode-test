@@ -5,3 +5,5 @@ export const SET_TYPES_VALUE = 'SET_TYPES_VALUE';
 export const SET_SUBTYPES_VALUE = 'SET_SUBTYPES_VALUE';
 export const SET_LOADING = 'SET_LOADING';
 export const SET_POKEMON = 'SET_POKEMON';
+export const CLEAR_STATE = 'CLEAR_STATE';
+export const SET_AUTH = 'SET_AUTH';

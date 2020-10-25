@@ -2,9 +2,9 @@ import React from 'react';
 
 import style from './style.module.scss';
 
-function HeaderButton({ children }) {
+function HeaderButton({ children, clickHandler }) {
   return (
-    <button className={style.button}>{children}</button>
+    <button onClick={clickHandler} className={style.button}>{children}</button>
   )
 }
 

@@ -1,9 +1,11 @@
-import React from 'react';
-
-// import style from './style.module.scss';
+import React, { useContext } from 'react';
+import { useHistory } from 'react-router-dom'
+import { AuthContext } from '../../store/AuthContext';
 
 import MainLayout from '../../Layouts/FormLayout';
 import Form from '../../components/Form';
+
+import { SET_AUTH } from '../../store/ACTION_TYPES';
 
 function Login() {
   const inputs = [
@@ -21,9 +23,23 @@ function Login() {
     },
   ];
 
+  const history = useHistory();
+  const [{ users }, authDispatch] = useContext(AuthContext);
+
+  const submitHandler = (evt, inputs) => {
+    evt.preventDefault();
+    const user = users.find(({ login }) => login === inputs[0].value);
+    if (user) {
+      if (user.password === inputs[1].value) {
+        authDispatch({ type: SET_AUTH, payload: true });
+        history.push('/');
+      }
+    }
+  }
+
   return (
     <MainLayout>
-      <Form inputs={inputs}></Form>
+      <Form inputs={inputs} submitHandler={submitHandler}></Form>
     </MainLayout>
   );
 }

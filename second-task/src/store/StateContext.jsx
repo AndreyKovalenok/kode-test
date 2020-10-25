@@ -8,6 +8,7 @@ import {
   SET_SUBTYPES_VALUE,
   SET_LOADING,
   SET_POKEMON,
+  CLEAR_STATE,
 } from './ACTION_TYPES';
 
 export const pokemonApiUrl = 'https://api.pokemontcg.io/v1/';
@@ -61,6 +62,8 @@ function StateProvider({ children }) {
           ...state,
           pokemon: payload,
         };
+      case CLEAR_STATE:
+        return initialState;
       default:
         return state;
     }
