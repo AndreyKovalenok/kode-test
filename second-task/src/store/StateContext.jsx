@@ -8,6 +8,7 @@ import {
   SET_SUBTYPES_VALUE,
   SET_LOADING,
   SET_POKEMON,
+  SET_PAGE,
   CLEAR_STATE,
 } from './ACTION_TYPES';
 
@@ -19,6 +20,7 @@ function StateProvider({ children }) {
     pokemons: [],
     types: [],
     subtypes: [],
+    page: '1',
     typesValue: '',
     subtypesValue: '',
     isLoading: false,
@@ -61,6 +63,11 @@ function StateProvider({ children }) {
         return {
           ...state,
           pokemon: payload,
+        };
+      case SET_PAGE:
+        return {
+          ...state,
+          page: payload,
         };
       case CLEAR_STATE:
         return initialState;

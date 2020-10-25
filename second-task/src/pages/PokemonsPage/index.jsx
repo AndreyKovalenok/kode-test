@@ -9,6 +9,7 @@ import Select from '../../components/UI/Select';
 import Loader from '../../components/UI/Loader';
 import Pokemon from './Pokemon';
 import HelpMessage from './HelpMessage';
+import Pagination from './Pagination';
 
 import { SET_POKEMONS_TYPES, SET_POKEMONS_SUBTYPES, SET_POKEMON } from '../../store/ACTION_TYPES';
 
@@ -54,18 +55,21 @@ function CategoriesPage({ setTypesValue }) {
             isLoading
             ? <Loader />
             : pokemons.length
-              ? <section className={style.content}>
-                {pokemons.map(({ id, imageUrl, name, artist }, index) => (
-                    <Pokemon 
-                      key={id + index} 
-                      id={id}
-                      image={imageUrl} 
-                      name={name} 
-                      artist={artist} 
-                      setPokemonPreview={setPokemonPreview}
-                    />
-                  ))}
-              </section>
+              ? <>
+                  <section className={style.content}>
+                    {pokemons.map(({ id, imageUrl, name, artist }, index) => (
+                        <Pokemon 
+                          key={id + index} 
+                          id={id}
+                          image={imageUrl} 
+                          name={name} 
+                          artist={artist} 
+                          setPokemonPreview={setPokemonPreview}
+                        />
+                      ))}  
+                  </section>
+                  <Pagination />
+                </>
               : <HelpMessage>Покемона с таким сочетанием типа и подтипа нет</HelpMessage>
           }
         </div>

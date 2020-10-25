@@ -45,6 +45,7 @@
 }
 
 .contentWrapper {
+  position: relative;
   background-color: var(--clGray-1);
 
   @media (min-width: 880px) { 

@@ -17,14 +17,14 @@ import {
 
 function App() {
   const history = useHistory();
-  const [{ typesValue, subtypesValue }, dispatch] = useContext(StateContext);
+  const [{ typesValue, subtypesValue, page }, dispatch] = useContext(StateContext);
   const [{ isLoggedIn }] = useContext(AuthContext);
 
   useEffect(() => {
-    if(isLoggedIn) {
+    if(!isLoggedIn) {
       const fetchPokemons = async function () {
         const generatePath = function () {
-          let path = `${pokemonApiUrl}cards/?page=1`;
+          let path = `${pokemonApiUrl}cards/?pageSize=10&total-count=500&page=${page}`;
           if (typesValue) {
             path += `&types=${typesValue}`;  
           }
@@ -42,9 +42,9 @@ function App() {
   
       fetchPokemons();
     } else {
-      history.push('/login')
+      // history.push('/login')
     }
-  }, [typesValue, subtypesValue, isLoggedIn, history, dispatch]);
+  }, [page, typesValue, subtypesValue, isLoggedIn, history, dispatch]);
    
   function setTypesValue({ filter, value }) {
     if (filter === 'Type') {
