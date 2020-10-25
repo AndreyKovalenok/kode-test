@@ -5,7 +5,7 @@
 
   @media (min-width: 599px) {
     width: 40rem;
-    height: 42.6rem;
+    height: 46rem;
     padding: 5.5rem 6rem 4rem;
   }
 
@@ -24,6 +24,7 @@
   flex: 1;
   display: flex;
   justify-content: center;
+  margin-bottom: 1.5rem;
 
   @media (min-width: 599px) {
     align-items: flex-end;
@@ -32,4 +33,10 @@
   @media (max-width: 599px) {
     align-items: flex-start;
   }
+}
+
+.link {
+  font-size: var(--fontSize-1);
+  color: var(--clBlack);
+  text-align: center;
 }

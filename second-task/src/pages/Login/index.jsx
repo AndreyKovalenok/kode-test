@@ -1,6 +1,6 @@
 import React, { useContext } from 'react';
 import { useFormik } from 'formik';
-import { useHistory } from 'react-router-dom'
+import { NavLink, useHistory } from 'react-router-dom'
 import { AuthContext } from '../../store/AuthContext';
 
 import style from './style.module.scss';
@@ -83,6 +83,7 @@ function Login() {
         <div className={style.buttonWrap}>
             <NextButton />
         </div>
+        <NavLink to="/password-confirmation" className={style.link}>Использовать одноразовый пароль</NavLink>
       </form>
     </MainLayout>
   );
