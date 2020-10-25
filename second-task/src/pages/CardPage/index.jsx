@@ -1,5 +1,5 @@
 import React, { useContext, useEffect } from 'react';
-import { StateContext } from '../../App';
+import { StateContext } from '../../store/StateContext';
 import { useHistory } from 'react-router-dom';
 
 import style from './style.module.scss';
@@ -8,9 +8,8 @@ import ContentLayout from '../../Layouts/ContentLayout';
 import Header from '../../components/Header';
 
 function CardPage() {
-  const { pokemon } = useContext(StateContext);
+  const [{ pokemon }]= useContext(StateContext);
   const history = useHistory();
-  console.log(history);
   useEffect(() => {
     if (!pokemon) {
       history.push('/');

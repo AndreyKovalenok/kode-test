@@ -1,5 +1,5 @@
 import React, { useContext, useEffect } from 'react';
-import { StateContext } from '../../App';
+import { StateContext, pokemonApiUrl } from '../../store/StateContext';
 
 import style from './style.module.scss';
 
@@ -12,9 +12,9 @@ import HelpMessage from './HelpMessage';
 
 import { SET_POKEMONS_TYPES, SET_POKEMONS_SUBTYPES, SET_POKEMON } from '../../store/ACTION_TYPES';
 
-function CategoriesPage({ dispatch, pokemonApiUrl, setTypesValue }) {
+function CategoriesPage({ setTypesValue }) {
 
-  const { pokemons, types, subtypes, isLoading, typesValue, subtypesValue } = useContext(StateContext);
+  const [{ pokemons, types, subtypes, isLoading, typesValue, subtypesValue }, dispatch]= useContext(StateContext);
 
   useEffect(() => {
     async function fetchTypes() {
@@ -27,10 +27,11 @@ function CategoriesPage({ dispatch, pokemonApiUrl, setTypesValue }) {
       dispatch({ type: SET_POKEMONS_SUBTYPES, payload: subtypes });
     }
     fetchTypes();
-  }, [dispatch, pokemonApiUrl]);
+  }, [dispatch]);
 
   const setPokemonPreview = (pokemonId) => {
     const pokemon = pokemons.find(({ id }) => id === pokemonId);
+    console.log(pokemon);
     dispatch({ type: SET_POKEMON, payload: pokemon });
   }
   

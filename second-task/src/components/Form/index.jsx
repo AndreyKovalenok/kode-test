@@ -26,7 +26,7 @@ function Form({ method = 'GET', action = '/', inputs = [] }) {
       }
       <div className={style.buttonWrap}>
           <NextButton />
-        </div>
+      </div>
     </form>
   )
 }
