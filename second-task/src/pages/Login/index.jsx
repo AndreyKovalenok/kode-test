@@ -1,38 +1,52 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext } from 'react';
+import { useFormik } from 'formik';
 import { useHistory } from 'react-router-dom'
 import { AuthContext } from '../../store/AuthContext';
 
 import style from './style.module.scss';
 
-import MainLayout from '../../Layouts/FormLayout';
+import MainLayout from '../../Layouts/FormLayout'; 
 import Input from '../../components/UI/Input';
 import NextButton from '../../components/UI/NextButton';
 
 import { SET_AUTH } from '../../store/ACTION_TYPES';
 
+const validate = ({ name, password }) => {
+  const errors = {};
+  if (!name) {
+    errors.name = 'Это обязательное поле';
+  } else if (name.length < 4) {
+    errors.name = `Длина поля должна быть не менее 4 символов, сейчас ${name.length}`;
+  } 
+  if (!password) {
+    errors.password = 'Это обязательное поле';
+  } else if (password.length < 6) {
+    errors.password = `Длина поля должна быть не менее 6 символов, сейчас ${password.length}`;
+  }
+
+  return errors;
+}
+
 function Login() {
-  const [inputsValue, setInputValue] = useState({ name: '', password: '' });
-  const { name: nameValue, password: passwordValue } =  inputsValue;
   const history = useHistory();
   const [{ users }, authDispatch] = useContext(AuthContext);
 
-  const submitHandler = (evt) => {
-    evt.preventDefault();
-    const user = users.find(({ login }) => login === nameValue);
-    if (user) {
-      if (user.password === passwordValue) {
-        authDispatch({ type: SET_AUTH, payload: true });
-        history.push('/');
+  const { handleSubmit, handleChange, values: { name, password }, errors, touched } = useFormik({
+    initialValues: {
+      name: '',
+      password: '', 
+    },
+    validate,
+    onSubmit() {
+      const user = users.find(({ login }) => login === name);
+      if (user) {
+        if (user.password === password) {
+          authDispatch({ type: SET_AUTH, payload: true });
+          history.push('/');
+        }
       }
     }
-  }
-
-  const inputChangeHandler = (evt, name) => {
-    setInputValue({
-      ...inputsValue,
-      [name]: evt.target.value,
-    })
-  };
+  });
 
   return (
     <MainLayout>
@@ -40,7 +54,7 @@ function Login() {
         method='POST'
         action='/'
         className={style.form}
-        onSubmit={(evt) => submitHandler(evt)}
+        onSubmit={handleSubmit}
       >
         <div className={style.row}>
           <Input 
@@ -48,8 +62,10 @@ function Login() {
             name="name"  
             type="text"
             placeholder="Введите логин" 
-            value={nameValue}
-            inputChangeHandler={inputChangeHandler}
+            value={name}
+            inputChangeHandler={handleChange}
+            touched={touched.name}
+            message={errors.name}
           />
         </div>
         <div className={style.row}>
@@ -58,8 +74,10 @@ function Login() {
             name="password" 
             type="password"
             placeholder="Введите пароль" 
-            value={passwordValue}
-            inputChangeHandler={inputChangeHandler}
+            value={password}
+            inputChangeHandler={handleChange}
+            touched={touched.password}
+            message={errors.password}
           />
         </div>
         <div className={style.buttonWrap}>
