@@ -10,11 +10,11 @@ import Loader from '../../components/UI/Loader';
 import Pokemon from './Pokemon';
 import HelpMessage from './HelpMessage';
 
-import { SET_POKEMONS_TYPES, SET_POKEMONS_SUBTYPES } from '../../store/ACTION_TYPES';
+import { SET_POKEMONS_TYPES, SET_POKEMONS_SUBTYPES, SET_POKEMON } from '../../store/ACTION_TYPES';
 
 function CategoriesPage({ dispatch, pokemonApiUrl, setTypesValue }) {
 
-  const { pokemons, types, subtypes, isLoading, typesValue, subtypesValue } = (useContext(StateContext));
+  const { pokemons, types, subtypes, isLoading, typesValue, subtypesValue } = useContext(StateContext);
 
   useEffect(() => {
     async function fetchTypes() {
@@ -28,6 +28,11 @@ function CategoriesPage({ dispatch, pokemonApiUrl, setTypesValue }) {
     }
     fetchTypes();
   }, [dispatch, pokemonApiUrl]);
+
+  const setPokemonPreview = (pokemonId) => {
+    const pokemon = pokemons.find(({ id }) => id === pokemonId);
+    dispatch({ type: SET_POKEMON, payload: pokemon });
+  }
   
   return (
     <ContentLayout>
@@ -52,9 +57,11 @@ function CategoriesPage({ dispatch, pokemonApiUrl, setTypesValue }) {
                 {pokemons.map(({ id, imageUrl, name, artist }, index) => (
                     <Pokemon 
                       key={id + index} 
+                      id={id}
                       image={imageUrl} 
                       name={name} 
                       artist={artist} 
+                      setPokemonPreview={setPokemonPreview}
                     />
                   ))}
               </section>

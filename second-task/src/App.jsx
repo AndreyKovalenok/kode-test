@@ -13,6 +13,7 @@ import {
   SET_TYPES_VALUE,
   SET_SUBTYPES_VALUE,
   SET_LOADING,
+  SET_POKEMON,
 } from './store/ACTION_TYPES';
 
 export const StateContext = createContext();
@@ -27,6 +28,7 @@ function App() {
     typesValue: '',
     subtypesValue: '',
     isLoading: false,
+    pokemon: null,
   };
   
   function reducer(state, { type, payload }) {
@@ -60,6 +62,11 @@ function App() {
         return {
           ...state,
           isLoading: payload,
+        };
+      case SET_POKEMON:
+        return {
+          ...state,
+          pokemon: payload,
         };
       default:
         return state;

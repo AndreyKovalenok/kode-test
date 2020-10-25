@@ -3,9 +3,10 @@ import { NavLink } from 'react-router-dom';
 
 import style from './style.module.scss';
 
-function Pokemon({ image, name, artist }) {
+function Pokemon({ id, image, name, artist, setPokemonPreview }) {
+
   return (
-    <article className={style.pokemon}>
+    <article onClick={() => setPokemonPreview(id)} className={style.pokemon}>
       <NavLink className={style.link} to="/card-page">
         <img className={style.image} src={image} alt={name}/>
         <p className={style.name}>{name}</p>
