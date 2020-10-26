@@ -9,6 +9,7 @@ import {
   SET_LOADING,
   SET_POKEMON,
   SET_PAGE,
+  SET_TOTAL_COUNT,
   CLEAR_STATE,
 } from './ACTION_TYPES';
 
@@ -21,6 +22,9 @@ function StateProvider({ children }) {
     types: [],
     subtypes: [],
     page: '1',
+    totalCount: 0,
+    lastPage: 0,
+    pageSize: 10,
     typesValue: '',
     subtypesValue: '',
     isLoading: false,
@@ -71,6 +75,12 @@ function StateProvider({ children }) {
         };
       case CLEAR_STATE:
         return initialState;
+      case SET_TOTAL_COUNT:
+        return {
+          ...state,
+          totalCount: payload,
+          lastPage: String(Math.floor(payload / state.pageSize))
+        };
       default:
         return state;
     }

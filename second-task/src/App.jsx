@@ -13,18 +13,19 @@ import {
   SET_TYPES_VALUE,
   SET_SUBTYPES_VALUE,
   SET_LOADING,
+  SET_TOTAL_COUNT,
 } from './store/ACTION_TYPES';
 
 function App() {
   const history = useHistory();
-  const [{ typesValue, subtypesValue, page }, dispatch] = useContext(StateContext);
+  const [{ typesValue, subtypesValue, page, pageSize }, dispatch] = useContext(StateContext);
   const [{ isLoggedIn }] = useContext(AuthContext);
 
   useEffect(() => {
     if(!isLoggedIn) {
       const fetchPokemons = async function () {
         const generatePath = function () {
-          let path = `${pokemonApiUrl}cards/?pageSize=10&total-count=500&page=${page}`;
+          let path = `${pokemonApiUrl}cards/?pageSize=${pageSize}&page=${page}`;
           if (typesValue) {
             path += `&types=${typesValue}`;  
           }
@@ -35,6 +36,7 @@ function App() {
         }
         dispatch({ type: SET_LOADING, payload: true });
         const pokemonResponse = await fetch(generatePath());
+        dispatch({ type: SET_TOTAL_COUNT, payload: pokemonResponse.headers.get('total-count') });
         const { cards } = await pokemonResponse.json();
         dispatch({ type: SET_LOADING, payload: false });
         dispatch({ type: SET_POKEMONS, payload: cards }); 
@@ -44,7 +46,7 @@ function App() {
     } else {
       // history.push('/login')
     }
-  }, [page, typesValue, subtypesValue, isLoggedIn, history, dispatch]);
+  }, [page, typesValue, pageSize, subtypesValue, isLoggedIn, history, dispatch]);
    
   function setTypesValue({ filter, value }) {
     if (filter === 'Type') {

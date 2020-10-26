@@ -4,33 +4,34 @@
   display: flex;
   flex-direction: row;
   justify-content: center;
+  padding: 1rem 2rem;
+  margin: 0 2rem;
+  background-color: var(--clGray-10);
 }
 
 .paginationItem {
   &:not(:last-child) {
-    margin-right: 0.5rem;
+    margin-right: 1rem;
   }
 }
 
 .button {
-  padding: 1rem 2rem;
-  background-color: var(--clGray-7);
-  border-radius: 0.3rem;
-  border: 0.2rem solid var(--clGray-3);
+  background-color: transparent;
+  border: none;
   font-size: var(--fontSize-3);
+  text-decoration: underline;
+  text-decoration-style: dotted;
   transition: 0.2s background-color;
   cursor: pointer;
 
   &:hover {
-    background-color: var(--clGray-5);
+    text-decoration: none;
   }
 }
 
 .activebutton {
-  padding: 1rem 2rem;
-  background-color: var(--clGray-3);
-  border-radius: 0.3rem;
-  border: 0.2rem solid var(--clGray-3);
+  background-color: transparent;
+  border: none;
   font-size: var(--fontSize-3);
   transition: 0.2s background-color;
   cursor: pointer;

@@ -8,3 +8,4 @@ export const SET_POKEMON = 'SET_POKEMON';
 export const CLEAR_STATE = 'CLEAR_STATE';
 export const SET_AUTH = 'SET_AUTH';
 export const SET_PAGE = 'SET_PAGE';
+export const SET_TOTAL_COUNT = 'SET_TOTAL_COUNT';
