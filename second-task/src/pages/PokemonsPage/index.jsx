@@ -1,5 +1,7 @@
-import React, { useContext, useEffect } from 'react';
+import React, { useContext, useEffect, useState, useRef } from 'react';
+import { NavLink } from 'react-router-dom';
 import { StateContext, pokemonApiUrl } from '../../store/StateContext';
+import useOnClickOutside from '../../customHooks/useOnClickOutside';
 
 import style from './style.module.scss';
 
@@ -10,6 +12,7 @@ import Loader from '../../components/UI/Loader';
 import Pokemon from './Pokemon';
 import HelpMessage from './HelpMessage';
 import Pagination from './Pagination';
+import ModalLayout from '../../Layouts/ModalLayout';
 
 import { 
   SET_POKEMONS_TYPES, 
@@ -20,8 +23,8 @@ import {
 } from '../../store/ACTION_TYPES';
 
 function CategoriesPage() {
-
-  const [{ pokemons, types, subtypes, isLoading, typesValue, subtypesValue }, dispatch]= useContext(StateContext);
+  const [isModalOpen, toggleModal] = useState(false);
+  const [{ pokemons, pokemon, types, subtypes, isLoading, typesValue, subtypesValue }, dispatch]= useContext(StateContext);
    
   /**
    * Фунция установки значений типа и подтипа покемонов
@@ -59,47 +62,70 @@ function CategoriesPage() {
   const setPokemonPreview = (pokemonId) => {
     const pokemon = pokemons.find(({ id }) => id === pokemonId);
     dispatch({ type: SET_POKEMON, payload: pokemon });
+    toggleModal(true);
   }
+
+  const ref = useRef();
+  useOnClickOutside(ref, () => toggleModal(false));
   
   return (
-    <ContentLayout>
-      <div className={style.categories}>
-        <div className={style.header}>
-          <Header />
+    <>
+      {isModalOpen && <ModalLayout>
+        <div ref={ref} className={style.pokemonModal}>
+          <button className={style.pokemonModalClose} type="button" onClick={() => toggleModal(false)}></button>
+          {pokemon && <div className={style.modalContent}>
+            <img src={pokemon.imageUrlHiRes} alt={pokemon.name} className={style.modalImage}/> 
+            <div>
+              <ul className={style.modalParams}>
+                <li className={style.modalParamsItem}>Name: {pokemon.name}</li>
+                <li className={style.modalParamsItem}>Rarity: {pokemon.rarity}</li>
+                <li className={style.modalParamsItem}>Artist: {pokemon.artist}</li>
+                {pokemon.evolvesFrom && <li className={style.modalParamsItem}>EvolvesFrom: {pokemon.evolvesFrom}</li>}
+              </ul>
+              <NavLink to="/card-page" className={style.detailsButton}>More details</NavLink>
+            </div>
+          </div>}
         </div>
-        <aside className={style.aside}>
-          <div className={style.asideRow}>
-            <Select name="Type" list={types} setTypesValue={setTypesValue} value={typesValue} />
+      </ModalLayout>}
+      <ContentLayout>
+        <div className={style.categories}>
+          <div className={style.header}>
+            <Header />
           </div>
-          <div className={style.asideRow}>
-            <Select name="Subtype" list={subtypes} setTypesValue={setTypesValue} value={subtypesValue} />
+          <aside className={style.aside}>
+            <div className={style.asideRow}>
+              <Select name="Type" list={types} setTypesValue={setTypesValue} value={typesValue} />
+            </div>
+            <div className={style.asideRow}>
+              <Select name="Subtype" list={subtypes} setTypesValue={setTypesValue} value={subtypesValue} />
+            </div>
+          </aside>
+          <div className={style.contentWrapper}>
+            {
+              isLoading
+              ? <Loader />
+              : pokemons.length
+                ? <>
+                    <section className={style.content}>
+                      {pokemons.map(({ id, imageUrl, name, artist }, index) => (
+                          <Pokemon 
+                            key={id + index} 
+                            id={id}
+                            image={imageUrl} 
+                            name={name} 
+                            artist={artist} 
+                            setPokemonPreview={setPokemonPreview}
+                          />
+                        ))}  
+                    </section>
+                    <Pagination />
+                  </>
+                : <HelpMessage>Покемона с таким сочетанием типа и подтипа нет</HelpMessage>
+            }
           </div>
-        </aside>
-        <div className={style.contentWrapper}>
-          {
-            isLoading
-            ? <Loader />
-            : pokemons.length
-              ? <>
-                  <section className={style.content}>
-                    {pokemons.map(({ id, imageUrl, name, artist }, index) => (
-                        <Pokemon 
-                          key={id + index} 
-                          id={id}
-                          image={imageUrl} 
-                          name={name} 
-                          artist={artist} 
-                          setPokemonPreview={setPokemonPreview}
-                        />
-                      ))}  
-                  </section>
-                  <Pagination />
-                </>
-              : <HelpMessage>Покемона с таким сочетанием типа и подтипа нет</HelpMessage>
-          }
         </div>
-      </div>
-    </ContentLayout>
+      </ContentLayout>
+    </>
   );
 }
 

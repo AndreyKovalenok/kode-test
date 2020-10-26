@@ -103,3 +103,81 @@
       margin-bottom: 1rem;
   }
 }
+
+.pokemonModal {
+  position: relative;
+  z-index: 9991;
+  width: 80rem;
+  padding: 3rem 2rem;
+  background-color: var(--clGray-12);
+}
+
+.pokemonModalClose {
+  position: absolute;
+  top: 2rem;
+  right: 2rem;
+  width: 2rem;
+  height: 2rem;
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+  transition: 0.2s transform;
+
+  &::before,
+  &::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 50%;
+    width: 100%;
+    height: 0.3rem;
+    background-color: var(--clGray-3);
+  }
+
+  &::before {
+    transform: translateY(-50%) rotate(45deg);
+  }
+
+  &::after {
+    transform: translateY(-50%) rotate(-45deg);
+  }
+
+  &:hover {
+    transform: rotate(90deg);
+  }
+}
+
+.modalImage {
+  width: 32rem;
+  margin-right: 2rem;
+}
+
+.modalContent {
+  display: flex;
+}
+
+.modalParams {
+  margin-bottom: 4rem;
+}
+
+.modalParamsItem {
+  font-size: var(--fontSize-2);
+
+  &:not(:last-child) {
+    margin-bottom: 1.5rem;
+  }
+}
+
+.detailsButton {
+  padding: 1rem 2rem;
+  background-color: var(--clGray-6);
+  font-size: var(--fontSize-2);
+  color: var(--clBlack);
+  text-decoration: none;
+  cursor: pointer;
+  transition: 0.2s background-color;
+
+  &:hover {
+    background-color: var(--clGray-5);
+  }
+}
