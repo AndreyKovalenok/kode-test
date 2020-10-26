@@ -11,6 +11,9 @@ import NextButton from '../../components/UI/NextButton';
 
 import { SET_AUTH } from '../../store/ACTION_TYPES';
 
+/**
+ * Формирование сообщений об ошибке
+ */
 const validate = ({ name, password }) => {
   const errors = {};
   if (!name) {
@@ -31,6 +34,9 @@ function Login() {
   const history = useHistory();
   const [{ users }, authDispatch] = useContext(AuthContext);
 
+  /**
+   * Валидация формы с помощью библиотеки formik
+   */
   const { handleSubmit, handleChange, values: { name, password }, errors, touched } = useFormik({
     initialValues: {
       name: '',

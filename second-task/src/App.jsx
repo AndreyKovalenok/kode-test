@@ -10,8 +10,6 @@ import CardPage from './pages/CardPage';
 
 import { 
   SET_POKEMONS,
-  SET_TYPES_VALUE,
-  SET_SUBTYPES_VALUE,
   SET_LOADING,
   SET_TOTAL_COUNT,
 } from './store/ACTION_TYPES';
@@ -23,9 +21,13 @@ function App() {
 
   useEffect(() => {
     if(!isLoggedIn) {
+      /**
+       * Получение покемонов, при первой загрузке страницы отображаются покемоны с первой страницы
+       */
       const fetchPokemons = async function () {
         const generatePath = function () {
           let path = `${pokemonApiUrl}cards/?pageSize=${pageSize}&page=${page}`;
+          // Формирование строки запроса с параметрами, в зависимости от выбранных значений селектов
           if (typesValue) {
             path += `&types=${typesValue}`;  
           }
@@ -47,27 +49,13 @@ function App() {
       // history.push('/login')
     }
   }, [page, typesValue, pageSize, subtypesValue, isLoggedIn, history, dispatch]);
-   
-  function setTypesValue({ filter, value }) {
-    if (filter === 'Type') {
-      dispatch({ type: SET_TYPES_VALUE, payload: value });
-    } else if (filter === 'Subtype') {
-      dispatch({ type: SET_SUBTYPES_VALUE, payload: value });
-    }
-  }
 
   return (
     <div className="App">
       <Switch>
         <Route path="/login" component={Login} />
         <Route path="/password-confirmation" component={PasswordConfirmation} />
-        <Route path="/" exact>
-          <PokemonsPage 
-            pokemonApiUrl={pokemonApiUrl}
-            dispatch={dispatch}
-            setTypesValue={setTypesValue}
-          />
-        </Route>
+        <Route path="/" exact component={PokemonsPage} />
         <Route path="/card-page" component={CardPage} />
       </Switch>
     </div>

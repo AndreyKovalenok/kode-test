@@ -16,6 +16,10 @@ function Select({ name, list, setTypesValue, value = '' }) {
     return className.join(' ');
   }
 
+  /**
+   * Обработчик клика по селекту
+   * @param {Boolean} payload - true, если клие произошел вне элемента
+   */
   const selectClickHandler = (payload) => {
     if (payload) {
       setSelectState(false);
@@ -30,6 +34,9 @@ function Select({ name, list, setTypesValue, value = '' }) {
     }
   };
 
+  /**
+   * Обработчик фильтрации списка полей селекта 
+   */
   const filterInputChangeHandler = (evt) => {
     const filteredList = list.filter((el) => el.toLowerCase().includes(evt.target.value.trim().toLowerCase()));
     setDropdownList(filteredList);
@@ -40,6 +47,7 @@ function Select({ name, list, setTypesValue, value = '' }) {
   }, [list]);
 
   const ref = useRef();
+  // Вызова кастомного хука для обрабокти клика вне элемента
   useOnClickOutside(ref, () => selectClickHandler(true))
 
   return (

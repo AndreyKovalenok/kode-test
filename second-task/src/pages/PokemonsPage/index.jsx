@@ -11,13 +11,35 @@ import Pokemon from './Pokemon';
 import HelpMessage from './HelpMessage';
 import Pagination from './Pagination';
 
-import { SET_POKEMONS_TYPES, SET_POKEMONS_SUBTYPES, SET_POKEMON } from '../../store/ACTION_TYPES';
+import { 
+  SET_POKEMONS_TYPES, 
+  SET_POKEMONS_SUBTYPES, 
+  SET_POKEMON, 
+  SET_TYPES_VALUE,
+  SET_SUBTYPES_VALUE,
+} from '../../store/ACTION_TYPES';
 
-function CategoriesPage({ setTypesValue }) {
+function CategoriesPage() {
 
   const [{ pokemons, types, subtypes, isLoading, typesValue, subtypesValue }, dispatch]= useContext(StateContext);
+   
+  /**
+   * Фунция установки значений типа и подтипа покемонов
+   * @param {String} filter - тип селекта
+   * @param {String} value - тип / подтип покемона
+   */
+  function setTypesValue({ filter, value }) {
+    if (filter === 'Type') {
+      dispatch({ type: SET_TYPES_VALUE, payload: value });
+    } else if (filter === 'Subtype') {
+      dispatch({ type: SET_SUBTYPES_VALUE, payload: value });
+    }
+  }
 
   useEffect(() => {
+    /**
+     * Получение типов и подтипов для селектов
+     */
     async function fetchTypes() {
       const typesResponse = await fetch(`${pokemonApiUrl}types`)
       const { types } = await typesResponse.json();  
@@ -30,9 +52,12 @@ function CategoriesPage({ setTypesValue }) {
     fetchTypes();
   }, [dispatch]);
 
+  /**
+   * Выбор покемона для отображения на детальной карточке
+   * @param {String} pokemonId - id покемона
+   */
   const setPokemonPreview = (pokemonId) => {
     const pokemon = pokemons.find(({ id }) => id === pokemonId);
-    console.log(pokemon);
     dispatch({ type: SET_POKEMON, payload: pokemon });
   }
   
