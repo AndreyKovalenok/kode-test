@@ -1,14 +1,14 @@
 {
   "files": {
     "main.css": "/kode-test/static/css/main.a8162d97.chunk.css",
-    "main.js": "/kode-test/static/js/main.b757b6ea.chunk.js",
-    "main.js.map": "/kode-test/static/js/main.b757b6ea.chunk.js.map",
+    "main.js": "/kode-test/static/js/main.c30e54ae.chunk.js",
+    "main.js.map": "/kode-test/static/js/main.c30e54ae.chunk.js.map",
     "runtime-main.js": "/kode-test/static/js/runtime-main.803cb6b6.js",
     "runtime-main.js.map": "/kode-test/static/js/runtime-main.803cb6b6.js.map",
     "static/js/2.436eeaea.chunk.js": "/kode-test/static/js/2.436eeaea.chunk.js",
     "static/js/2.436eeaea.chunk.js.map": "/kode-test/static/js/2.436eeaea.chunk.js.map",
     "index.html": "/kode-test/index.html",
-    "precache-manifest.46facf0a0a463c0c2431fc97951d5321.js": "/kode-test/precache-manifest.46facf0a0a463c0c2431fc97951d5321.js",
+    "precache-manifest.3443b6a8da76bb9ae18e6f4c7eae08ff.js": "/kode-test/precache-manifest.3443b6a8da76bb9ae18e6f4c7eae08ff.js",
     "service-worker.js": "/kode-test/service-worker.js",
     "static/css/main.a8162d97.chunk.css.map": "/kode-test/static/css/main.a8162d97.chunk.css.map",
     "static/js/2.436eeaea.chunk.js.LICENSE.txt": "/kode-test/static/js/2.436eeaea.chunk.js.LICENSE.txt",
@@ -19,6 +19,6 @@
     "static/js/runtime-main.803cb6b6.js",
     "static/js/2.436eeaea.chunk.js",
     "static/css/main.a8162d97.chunk.css",
-    "static/js/main.b757b6ea.chunk.js"
+    "static/js/main.c30e54ae.chunk.js"
   ]
 }
