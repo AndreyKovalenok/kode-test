@@ -20,7 +20,7 @@ function App() {
   const [{ isLoggedIn }] = useContext(AuthContext);
 
   useEffect(() => {
-    if(!isLoggedIn) {
+    if(isLoggedIn) {
       /**
        * Получение покемонов, при первой загрузке страницы отображаются покемоны с первой страницы
        */
@@ -46,7 +46,7 @@ function App() {
   
       fetchPokemons();
     } else {
-      // history.push('/login')
+      history.push('/login')
     }
   }, [page, typesValue, pageSize, subtypesValue, isLoggedIn, history, dispatch]);
 
