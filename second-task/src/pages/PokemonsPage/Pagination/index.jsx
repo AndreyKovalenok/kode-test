@@ -11,12 +11,20 @@ function Pagination() {
   const pageToNumber = Number(page);
 
   useEffect(() => {
-    if (pageToNumber <=3) {
-      setPages(['1', '2', '3', '4', '5']);
-    } else if (pageToNumber > lastPage - 3) {
-      setPages([String(lastPage - 4), String(lastPage - 3), String(lastPage - 2), String(lastPage - 1), lastPage]);
+    if (Number(lastPage) <= 5) {
+      const pagesArray = [];
+      for (let i = 1; i <= lastPage; i++) {
+        pagesArray.push(String(i));
+      }
+      setPages(pagesArray);
     } else {
-      setPages([String(page - 2), String(page - 1), page, String(pageToNumber + 1), String(pageToNumber + 2)]);
+      if (pageToNumber <=3) {
+        setPages(['1', '2', '3', '4', '5']);
+      } else if (pageToNumber > lastPage - 3) {
+        setPages([String(lastPage - 4), String(lastPage - 3), String(lastPage - 2), String(lastPage - 1), lastPage]);
+      } else {
+        setPages([String(page - 2), String(page - 1), page, String(pageToNumber + 1), String(pageToNumber + 2)]);
+      }
     }
   }, [page, pageToNumber, lastPage]);
 

@@ -79,7 +79,7 @@ function StateProvider({ children }) {
         return {
           ...state,
           totalCount: payload,
-          lastPage: String(Math.floor(payload / state.pageSize))
+          lastPage: String(Math.ceil(payload / state.pageSize))
         };
       default:
         return state;

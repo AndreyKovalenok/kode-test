@@ -20,11 +20,12 @@ import {
   SET_POKEMON, 
   SET_TYPES_VALUE,
   SET_SUBTYPES_VALUE,
+  SET_PAGE,
 } from '../../store/ACTION_TYPES';
 
 function CategoriesPage() {
   const [isModalOpen, toggleModal] = useState(false);
-  const [{ pokemons, pokemon, types, subtypes, isLoading, typesValue, subtypesValue }, dispatch]= useContext(StateContext);
+  const [{ pokemons, pokemon, types, subtypes, isLoading, typesValue, subtypesValue, lastPage }, dispatch]= useContext(StateContext);
    
   /**
    * Фунция установки значений типа и подтипа покемонов
@@ -32,6 +33,7 @@ function CategoriesPage() {
    * @param {String} value - тип / подтип покемона
    */
   function setTypesValue({ filter, value }) {
+    dispatch({ type: SET_PAGE, payload: '1' });
     if (filter === 'Type') {
       dispatch({ type: SET_TYPES_VALUE, payload: value });
     } else if (filter === 'Subtype') {
@@ -118,7 +120,7 @@ function CategoriesPage() {
                           />
                         ))}  
                     </section>
-                    <Pagination />
+                    {Number(lastPage) > 1 && <Pagination />}
                   </>
                 : <HelpMessage>Покемона с таким сочетанием типа и подтипа нет</HelpMessage>
             }
