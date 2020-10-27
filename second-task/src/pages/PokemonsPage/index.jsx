@@ -62,19 +62,30 @@ function CategoriesPage() {
    * @param {String} pokemonId - id покемона
    */
   const setPokemonPreview = (pokemonId) => {
+    document.body.style = 'overflow: hidden';
     const pokemon = pokemons.find(({ id }) => id === pokemonId);
     dispatch({ type: SET_POKEMON, payload: pokemon });
     toggleModal(true);
   }
 
+  const closeModal = () => {
+    toggleModal(false);
+    document.body.removeAttribute('style');
+  };
+
+  const linkClickHandler = () => {
+    window.scroll(0, 0);
+    document.body.removeAttribute('style');
+  };
+
   const ref = useRef();
-  useOnClickOutside(ref, () => toggleModal(false));
+  useOnClickOutside(ref, () => closeModal());
   
   return (
     <>
       {isModalOpen && <ModalLayout>
         <div ref={ref} className={style.pokemonModal}>
-          <button className={style.pokemonModalClose} type="button" onClick={() => toggleModal(false)}></button>
+          <button className={style.pokemonModalClose} type="button" onClick={() => closeModal()}></button>
           {pokemon && <div className={style.modalContent}>
             <img src={pokemon.imageUrlHiRes} alt={pokemon.name} className={style.modalImage}/> 
             <div>
@@ -84,7 +95,7 @@ function CategoriesPage() {
                 <li className={style.modalParamsItem}>Artist: {pokemon.artist}</li>
                 {pokemon.evolvesFrom && <li className={style.modalParamsItem}>EvolvesFrom: {pokemon.evolvesFrom}</li>}
               </ul>
-              <NavLink to="/card-page" className={style.detailsButton}>More details</NavLink>
+              <NavLink to="/card-page" onClick={() => linkClickHandler()} className={style.detailsButton}>More details</NavLink>
             </div>
           </div>}
         </div>

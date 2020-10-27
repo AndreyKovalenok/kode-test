@@ -107,9 +107,18 @@
 .pokemonModal {
   position: relative;
   z-index: 9991;
-  width: 80rem;
   padding: 3rem 2rem;
   background-color: var(--clGray-12);
+
+  @media (min-width: 880px) {
+    width: 80rem;
+  }
+
+  @media (max-width: 880px) {
+    width: 100vw;
+    height: 100vh;
+    overflow-y: auto;
+  }
 }
 
 .pokemonModalClose {
@@ -148,12 +157,23 @@
 }
 
 .modalImage {
-  width: 32rem;
-  margin-right: 2rem;
+  @media (min-width: 599px) {
+    width: 32rem;
+    margin-right: 2rem;
+  }
+  
+  @media (max-width: 599px) {
+    margin-bottom: 2rem;
+  }
 }
 
 .modalContent {
   display: flex;
+
+  @media (max-width: 599px) {
+    padding-top: 2rem;
+    flex-direction: column;
+  }
 }
 
 .modalParams {
