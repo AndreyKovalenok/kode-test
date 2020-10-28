@@ -41,6 +41,19 @@ function CategoriesPage() {
     }
   }
 
+  /**
+   * Фунция очистки значений типа и подтипа покемонов
+   * @param {String} filter - тип селекта
+   */
+  function clearTypesValue(filter) {
+    dispatch({ type: SET_PAGE, payload: '1' });
+    if (filter === 'Type') {
+      dispatch({ type: SET_TYPES_VALUE, payload: '' });
+    } else if (filter === 'Subtype') {
+      dispatch({ type: SET_SUBTYPES_VALUE, payload: '' });
+    }
+  }
+
   useEffect(() => {
     /**
      * Получение типов и подтипов для селектов
@@ -107,10 +120,10 @@ function CategoriesPage() {
           </div>
           <aside className={style.aside}>
             <div className={style.asideRow}>
-              <Select name="Type" list={types} setTypesValue={setTypesValue} value={typesValue} />
+              <Select name="Type" list={types} setTypesValue={setTypesValue} clearTypesValue={clearTypesValue} value={typesValue} />
             </div>
             <div className={style.asideRow}>
-              <Select name="Subtype" list={subtypes} setTypesValue={setTypesValue} value={subtypesValue} />
+              <Select name="Subtype" list={subtypes} setTypesValue={setTypesValue} clearTypesValue={clearTypesValue} value={subtypesValue} />
             </div>
           </aside>
           <div className={style.contentWrapper}>

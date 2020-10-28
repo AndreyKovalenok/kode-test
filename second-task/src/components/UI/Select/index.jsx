@@ -3,7 +3,7 @@ import useOnClickOutside from '../../../customHooks/useOnClickOutside';
 
 import style from './style.module.scss';
 
-function Select({ name, list, setTypesValue, value = '' }) {
+function Select({ name, list, setTypesValue, clearTypesValue, value = '' }) {
   const [isOpen, setSelectState] = useState(false);
   const [selectClasses, setSelectClasses] = useState([style.select])
   const [dropdownList, setDropdownList] = useState(list);
@@ -20,11 +20,11 @@ function Select({ name, list, setTypesValue, value = '' }) {
    * Обработчик клика по селекту
    * @param {Boolean} payload - true, если клие произошел вне элемента
    */
-  const selectClickHandler = (payload) => {
+  const selectClickHandler = (payload, evt) => {
     if (payload) {
       setSelectState(false);
       setSelectClasses([style.select]);
-    } else {
+    } else if (evt.target !== buttonRef.current) {
       setSelectState(!isOpen);
       if (selectClasses.indexOf(style.active) !== -1) {
         setSelectClasses(selectClasses.filter((el) => el !== style.active));
@@ -47,6 +47,7 @@ function Select({ name, list, setTypesValue, value = '' }) {
   }, [list]);
 
   const ref = useRef();
+  const buttonRef = useRef();
   // Вызова кастомного хука для обрабокти клика вне элемента
   useOnClickOutside(ref, () => selectClickHandler(true))
 
@@ -54,8 +55,11 @@ function Select({ name, list, setTypesValue, value = '' }) {
     <div ref={ref} className={selectClasses.join(' ')}>
       <div 
         className={style.selectInput}
-        onClick={() => selectClickHandler()}
-      >{value || name}</div>
+        onClick={(evt) => selectClickHandler(false, evt)}
+      >
+        {value || name}
+        {value && <button ref={buttonRef} className={style.clearButton} onClick={() => clearTypesValue(name)}></button>}
+      </div>
       {isOpen && <div className={style.selectDropdown}>
         <input 
           type="text" 
